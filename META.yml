@@ -1,0 +1,53 @@
+---
+name: WebService-NFSN
+version: 0.01
+author:
+  - Christopher J. Madsen <perl@cjmweb.net>
+abstract: Client for the NearlyFreeSpeech.NET API
+license: perl
+resources:
+  license: http://dev.perl.org/licenses/
+requires:
+  Digest::SHA1: 0
+  Exception::Class: 0
+  HTTP::Request::Common: 0
+  JSON::XS: 1
+  LWP: 5
+  URI: 1
+build_requires:
+  File::Spec: 0
+  FindBin: 0
+  Module::Build: 0.21
+  Test::More: 0
+recommends:
+  Data::Dumper: 0
+dynamic_config: 0
+provides:
+  WebService::NFSN:
+    file: lib/WebService/NFSN.pm
+    version: 0.01
+  WebService::NFSN::Account:
+    file: lib/WebService/NFSN/Account.pm
+    version: 0.01
+  WebService::NFSN::DNS:
+    file: lib/WebService/NFSN/DNS.pm
+    version: 0.01
+  WebService::NFSN::Email:
+    file: lib/WebService/NFSN/Email.pm
+    version: 0.01
+  WebService::NFSN::Member:
+    file: lib/WebService/NFSN/Member.pm
+    version: 0.01
+  WebService::NFSN::Object:
+    file: lib/WebService/NFSN/Object.pm
+    version: 0.01
+  WebService::NFSN::Site:
+    file: lib/WebService/NFSN/Site.pm
+    version: 0.01
+generated_by: Module::Build version 0.2805
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2
+no_index:
+  file:
+    - My_Build.pm
