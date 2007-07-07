@@ -5,7 +5,7 @@ package WebService::NFSN::Object;
 #
 # Author: Christopher J. Madsen <cjm@pobox.com>
 # Created:  3 Apr 2007
-# $Id: Object.pm 1741 2007-04-06 18:18:09Z cjm $
+# $Id: Object.pm 1840 2007-07-07 22:03:44Z cjm $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -27,7 +27,7 @@ use URI ();
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 #=====================================================================
 sub get_converter # ($class, $function)
@@ -86,17 +86,24 @@ END PROPERTY
     while (my ($method, $params) = each %$methods) {
       my $convert = get_converter($class, $method);
 
-      #FIXME validate parameters
+      # Process method prototype:
+      my (%accepted, @required);
+      foreach (@$params) {
+        push @required, $_ unless s/\?$//;
+        $accepted{$_} = 1;
+      } # end foreach parameter declaration
 
-      eval <<"END PROPERTY";
+      eval <<"END METHOD";
 package $class;
+our \@_${method}_prototype = (\\\%accepted, \\\@required);
+
 sub $method
 {
   my \$self = shift \@_;
 
-  $convert \$self->POST_request('$method' => \@_);
+  $convert \$self->POST_request('$method', \@_${method}_prototype, \@_);
 }
-END PROPERTY
+END METHOD
       die $@ if $@;
     } # end while each method
   } # end if methods
@@ -133,7 +140,16 @@ sub PUT_request
 #---------------------------------------------------------------------
 sub POST_request
 {
-  my ($self, $method, %param) = @_;
+  my ($self, $method, $accepted, $required, %param) = @_;
+
+  foreach my $key (@$required) {
+    croak(qq'Missing required "$key" parameter for $method')
+        unless defined $param{$key};
+  }
+
+  foreach my $key (keys %param) {
+    carp(qq'"$key" is not a parameter of $method') unless $accepted->{$key};
+  }
 
   return $self->make_request(POST $self->make_uri($method), \%param);
 } # end POST_request

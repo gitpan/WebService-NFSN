@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------
-# $Id: DNS.pm 1740 2007-04-06 18:09:57Z cjm $
+# $Id: DNS.pm 1840 2007-07-07 22:03:44Z cjm $
 package WebService::NFSN::DNS;
 #
 # Copyright 2007 Christopher J. Madsen
@@ -27,7 +27,7 @@ use base 'WebService::NFSN::Object';
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';  # Also update VERSION section in documentation
 
 #=====================================================================
 BEGIN {
@@ -57,7 +57,7 @@ WebService::NFSN::DNS - Access NFSN DNS information
 
 =head1 VERSION
 
-This document describes WebService::NFSN::DNS version 0.01
+This document describes WebService::NFSN::DNS version 0.02
 
 
 =head1 SYNOPSIS
@@ -189,8 +189,8 @@ Most DNS methods take 3 parameters:
 =item name
 
 Name of the resource record.  This does not include the C<$DOMAIN>
-associated with the Site object; C<www> means C<www.example.com> (if
-the Site object is for C<example.com>).  The empty string refers to the
+associated with the C<DNS> object; C<www> means C<www.example.com> (if
+the C<DNS> object is for C<example.com>).  The empty string refers to the
 domain itself.
 
 =item type
@@ -239,6 +239,9 @@ match an existing record.
 
 Updates the serial of this domain.
 See the C<serial> property for more details.
+
+This method is generally unnecessary.  The serial is updated
+automatically when any change is made to the domain.
 
 =back
 
