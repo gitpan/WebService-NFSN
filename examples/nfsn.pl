@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id: nfsn.pl 1744 2007-04-06 22:27:10Z cjm $
+# $Id: nfsn.pl 1937 2007-12-20 05:56:11Z cjm $
 # Copyright 2007 Christopher J. Madsen
 #
 # This program is free software; you can redistribute it and/or modify
@@ -38,7 +38,12 @@ die "Unknown type $type\n" unless $nfsn->can($type);
 my $obj = $nfsn->$type($id);
 
 die "Unknown command $command\n" unless $obj->can($command);
-my $result = $obj->$command(@parameters);
+my $result = eval { $obj->$command(@parameters); };
+
+if ($@) {
+  print STDERR $nfsn->last_response->as_string;
+  die $@;
+}
 
 $Data::Dumper::Indent   = 1;
 $Data::Dumper::Sortkeys = 1;

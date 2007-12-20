@@ -1,6 +1,6 @@
 ---
 name: WebService-NFSN
-version: 0.03
+version: 0.04
 author:
   - 'Christopher J. Madsen <perl@cjmweb.net>'
 abstract: Client for the NearlyFreeSpeech.NET API
@@ -25,7 +25,7 @@ dynamic_config: 0
 provides:
   WebService::NFSN:
     file: lib/WebService/NFSN.pm
-    version: 0.03
+    version: 0.04
   WebService::NFSN::Account:
     file: lib/WebService/NFSN/Account.pm
     version: 0.01
@@ -34,7 +34,7 @@ provides:
     version: 0.02
   WebService::NFSN::Email:
     file: lib/WebService/NFSN/Email.pm
-    version: 0.01
+    version: 0.04
   WebService::NFSN::Member:
     file: lib/WebService/NFSN/Member.pm
     version: 0.03
@@ -44,7 +44,7 @@ provides:
   WebService::NFSN::Site:
     file: lib/WebService/NFSN/Site.pm
     version: 0.01
-generated_by: Module::Build version 0.2805
+generated_by: Module::Build version 0.2808
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
   version: 1.2
