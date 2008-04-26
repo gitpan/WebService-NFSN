@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id: Build.PL 1744 2007-04-06 22:27:10Z cjm $
+# $Id: Build.PL 1990 2008-04-26 00:47:04Z cjm $
 # Copyright 2007 Christopher J. Madsen
 #
 # Build.PL for WebService-NFSN
@@ -9,8 +9,9 @@
 use strict;
 use warnings;
 
+# Make sure we're using My_Build from our distribution:
 use FindBin;
-use lib $FindBin::Bin; # Make sure we're using My_Build from our distribution
+use lib "$FindBin::Bin/tools";
 
 use My_Build;          # Our customized version of Module::Build
 
@@ -20,6 +21,7 @@ my $builder = My_Build->new(
   dist_author        => 'Christopher J. Madsen <perl@cjmweb.net>',
   dist_version_from  => 'lib/WebService/NFSN.pm',
   requires => {
+      'perl'                  => '5.006',
       'Digest::SHA1'          => 0,
       'Exception::Class'      => 0,
       'JSON::XS'              => 1,
@@ -38,7 +40,7 @@ my $builder = My_Build->new(
   },
   create_makefile_pl => 'passthrough',
   dynamic_config     => 0,
-  meta_merge         => { no_index => { file => ['My_Build.pm'] }},
+  meta_merge         => { no_index  => { directory => [ 'tools' ] }},
 );
 
 $builder->create_build_script();

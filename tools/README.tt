@@ -1,4 +1,6 @@
-WebService-NFSN version 0.05, released April 25, 2008
+[% # $Id: README.tt 1995 2008-04-26 03:30:35Z cjm $ %]
+WebService-NFSN version [%version%], released [%date%]
+
 
 WebService::NFSN is a client library for NearlyFreeSpeech.NET's
 member API (https://api.nearlyfreespeech.net/).  It is only useful
@@ -32,11 +34,10 @@ Also, some of the example scripts use Data::Dumper to display the results.
 
 
 CHANGES
-    Here's what's new in version 0.05 of WebService-NFSN:
+    Here's what's new in version [%version%] of WebService-NFSN:
     (See the file "Changes" for the full revision history.)
 
-	- Now compatible with JSON::XS 2 (but still works with 1.x).
-	  You can also substitute pure-Perl JSON 2, but it's slower.
+[%changes%]
 
 
 

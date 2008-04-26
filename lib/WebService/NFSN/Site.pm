@@ -1,10 +1,10 @@
 #---------------------------------------------------------------------
-# $Id: Site.pm 1744 2007-04-06 22:27:10Z cjm $
+# $Id: Site.pm 1989 2008-04-25 23:51:04Z cjm $
 package WebService::NFSN::Site;
 #
 # Copyright 2007 Christopher J. Madsen
 #
-# Author: Christopher J. Madsen <cjm@pobox.com>
+# Author: Christopher J. Madsen <perl@cjmweb.net>
 # Created:  3 Apr 2007
 #
 # This program is free software; you can redistribute it and/or modify
@@ -20,13 +20,14 @@ package WebService::NFSN::Site;
 
 use 5.006;
 use strict;
+use warnings;
 
 use base 'WebService::NFSN::Object';
 
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '0.01';
+our $VERSION = '0.05';
 
 #=====================================================================
 BEGIN {
@@ -52,7 +53,7 @@ WebService::NFSN::Site - Access NFSN site API
 
 =head1 VERSION
 
-This document describes WebService::NFSN::Site version 0.01
+This document describes version 0.05 of WebService::NFSN::Site, released April 25, 2008 as part of WebService-NFSN version 0.05.
 
 
 =head1 SYNOPSIS

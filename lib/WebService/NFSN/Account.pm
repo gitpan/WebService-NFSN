@@ -1,10 +1,10 @@
 #---------------------------------------------------------------------
-# $Id: Account.pm 1775 2007-05-05 18:22:36Z cjm $
+# $Id: Account.pm 1989 2008-04-25 23:51:04Z cjm $
 package WebService::NFSN::Account;
 #
 # Copyright 2007 Christopher J. Madsen
 #
-# Author: Christopher J. Madsen <cjm@pobox.com>
+# Author: Christopher J. Madsen <perl@cjmweb.net>
 # Created:  3 Apr 2007
 #
 # This program is free software; you can redistribute it and/or modify
@@ -20,14 +20,14 @@ package WebService::NFSN::Account;
 
 use 5.006;
 use strict;
-use JSON::XS 'from_json';
+use warnings;
 
 use base 'WebService::NFSN::Object';
 
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '0.01';
+our $VERSION = '0.05';
 
 #=====================================================================
 BEGIN {
@@ -56,7 +56,7 @@ WebService::NFSN::Account - Access NFSN account information
 
 =head1 VERSION
 
-This document describes WebService::NFSN::Account version 0.01
+This document describes version 0.05 of WebService::NFSN::Account, released April 25, 2008 as part of WebService-NFSN version 0.05.
 
 
 =head1 SYNOPSIS
