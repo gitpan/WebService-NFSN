@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id: nfsn.pl 1937 2007-12-20 05:56:11Z cjm $
+# $Id: nfsn.pl 2086 2008-08-29 02:09:37Z cjm $
 # Copyright 2007 Christopher J. Madsen
 #
 # This program is free software; you can redistribute it and/or modify
@@ -41,8 +41,10 @@ die "Unknown command $command\n" unless $obj->can($command);
 my $result = eval { $obj->$command(@parameters); };
 
 if ($@) {
-  print STDERR $nfsn->last_response->as_string;
-  die $@;
+  my $err = $@;
+  my $res = $nfsn->last_response;
+  print STDERR $res->as_string if $res;
+  die $err;
 }
 
 $Data::Dumper::Indent   = 1;

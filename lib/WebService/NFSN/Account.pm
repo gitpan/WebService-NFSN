@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------
-# $Id: Account.pm 1989 2008-04-25 23:51:04Z cjm $
+# $Id: Account.pm 2088 2008-08-29 02:19:11Z cjm $
 package WebService::NFSN::Account;
 #
 # Copyright 2007 Christopher J. Madsen
@@ -27,7 +27,7 @@ use base 'WebService::NFSN::Object';
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 #=====================================================================
 BEGIN {
@@ -37,6 +37,7 @@ BEGIN {
             status:JSON sites:JSON)],
     rw => [qw(friendlyName)],
     methods => {
+      addSite       => [qw(site)],
       addWarning    => [qw(balance)],
       removeWarning => [qw(balance)],
     }
@@ -56,7 +57,7 @@ WebService::NFSN::Account - Access NFSN account information
 
 =head1 VERSION
 
-This document describes version 0.05 of WebService::NFSN::Account, released April 25, 2008 as part of WebService-NFSN version 0.05.
+This document describes version 0.06 of WebService::NFSN::Account, released August 28, 2008 as part of WebService-NFSN version 0.06.
 
 
 =head1 SYNOPSIS
@@ -155,6 +156,16 @@ reference of short names).
 =head2 Methods
 
 =over
+
+=item C<< $account->addSite(site => $SHORT_NAME) >>
+
+This method creates a new site backed by this account. The site's
+C<$SHORT_NAME> must not be in use by anyone at NFSN. If the call
+succeeds, the site will be created relatively quickly, but please
+allow a few minutes for DNS to propagate before attempting to use it.
+
+The return value is not meaningful; the method throws an error if the
+site cannot be created.
 
 =item C<< $account->addWarning(balance => $BALANCE) >>
 

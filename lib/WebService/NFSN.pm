@@ -5,7 +5,7 @@ package WebService::NFSN;
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
 # Created: 3 Apr 2007
-# $Id: NFSN.pm 1994 2008-04-26 03:26:29Z cjm $
+# $Id: NFSN.pm 2087 2008-08-29 02:12:16Z cjm $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -28,7 +28,7 @@ use UNIVERSAL 'isa';
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 our $saltAlphabet
     = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -164,15 +164,26 @@ sub make_request
   # Throw an exception if there was an error:
   if ($res->is_error) {
     my $param = eval { decode_json($res->content) };
+
     # Throw NFSNError if we decoded the response successfully:
-    WebService::NFSN::NFSNError->throw(
-      error => delete($param->{error}),
-      debug => delete($param->{debug}),
-      nfsn  => $param,
-      request  => $req,
-      response => $res,
-      @throw_parameters
-    ) if isa($param, 'HASH') and defined $param->{error};
+    if (isa($param, 'HASH') and defined $param->{error}) {
+      # If bad timestamp, list the dates:
+      my $debug = delete $param->{debug};
+      if ($debug and
+          $debug eq "The authentication timestamp is out of range.") {
+        $debug .= ("\n Client request date:  " . gmtime($time) .
+                   "\n Server response date: " . $res->header('Date'));
+      } # end if authentication timestamp out of range
+
+      WebService::NFSN::NFSNError->throw(
+        error => delete($param->{error}),
+        debug => $debug,
+        nfsn  => $param,
+        request  => $req,
+        response => $res,
+        @throw_parameters
+      );
+    } # end if throwing NFSNError
 
     # Otherwise, throw LWPError:
     WebService::NFSN::LWPError->throw(
@@ -204,7 +215,7 @@ WebService::NFSN - Client for the NearlyFreeSpeech.NET API
 
 =head1 VERSION
 
-This document describes version 0.05 of WebService::NFSN, released April 25, 2008 as part of WebService-NFSN version 0.05.
+This document describes version 0.06 of WebService::NFSN, released August 28, 2008 as part of WebService-NFSN version 0.06.
 
 
 =head1 SYNOPSIS
