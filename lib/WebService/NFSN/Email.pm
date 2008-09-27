@@ -54,7 +54,7 @@ WebService::NFSN::Email - Access NFSN email forwarding
 
 =head1 VERSION
 
-This document describes version 0.05 of WebService::NFSN::Email, released August 28, 2008 as part of WebService-NFSN version 0.06.
+This document describes version 0.05 of WebService::NFSN::Email, released September 27, 2008 as part of WebService-NFSN version 0.07.
 
 
 =head1 SYNOPSIS

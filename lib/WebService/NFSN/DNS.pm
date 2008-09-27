@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------
-# $Id: DNS.pm 1989 2008-04-25 23:51:04Z cjm $
+# $Id: DNS.pm 2107 2008-09-27 20:42:32Z cjm $
 package WebService::NFSN::DNS;
 #
 # Copyright 2007 Christopher J. Madsen
@@ -27,7 +27,7 @@ use base 'WebService::NFSN::Object';
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '0.05';
+our $VERSION = '0.07';
 
 #=====================================================================
 BEGIN {
@@ -36,7 +36,7 @@ BEGIN {
     ro   => [qw(serial)],
     rw   => [qw(expire minTTL refresh retry)],
     methods => {
-      addRR          => [qw(name type data)],
+      addRR          => [qw(name type data ttl?)],
       'listRRs:JSON' => [qw(name? type? data?)],
       removeRR       => [qw(name type data)],
       updateSerial   => [],
@@ -57,7 +57,7 @@ WebService::NFSN::DNS - Access NFSN DNS information
 
 =head1 VERSION
 
-This document describes version 0.05 of WebService::NFSN::DNS, released August 28, 2008 as part of WebService-NFSN version 0.06.
+This document describes version 0.07 of WebService::NFSN::DNS, released September 27, 2008 as part of WebService-NFSN version 0.07.
 
 
 =head1 SYNOPSIS
@@ -209,11 +209,14 @@ These are the methods:
 
 =over
 
-=item C<< $dns->addRR(name => $NAME, type => $TYPE, data => $DATA) >>
+=item C<< $dns->addRR(name => $NAME, type => $TYPE, data => $DATA [,ttl => $TTL]) >>
 
 Adds a new resource record to the domain's DNS. Any record that can be
 added through the member interface can be added through this method as
 well, including the SPF Email Protection record.
+
+The optional C<ttl> parameter is the Time To Live value (in seconds)
+for the new record.  It defaults to 3600 (1 hour).
 
 =item C<< $dns->listRRs([name => $NAME,] [type => $TYPE,] [data => $DATA]) >>
 

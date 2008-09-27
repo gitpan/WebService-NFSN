@@ -5,7 +5,7 @@ package WebService::NFSN;
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
 # Created: 3 Apr 2007
-# $Id: NFSN.pm 2087 2008-08-29 02:12:16Z cjm $
+# $Id: NFSN.pm 2107 2008-09-27 20:42:32Z cjm $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -28,7 +28,7 @@ use UNIVERSAL 'isa';
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 our $saltAlphabet
     = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -215,7 +215,7 @@ WebService::NFSN - Client for the NearlyFreeSpeech.NET API
 
 =head1 VERSION
 
-This document describes version 0.06 of WebService::NFSN, released August 28, 2008 as part of WebService-NFSN version 0.06.
+This document describes version 0.07 of WebService::NFSN, released September 27, 2008 as part of WebService-NFSN version 0.07.
 
 
 =head1 SYNOPSIS
