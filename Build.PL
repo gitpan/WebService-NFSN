@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id: Build.PL 1990 2008-04-26 00:47:04Z cjm $
+# $Id: Build.PL 2110 2008-09-28 22:41:19Z cjm $
 # Copyright 2007 Christopher J. Madsen
 #
 # Build.PL for WebService-NFSN
@@ -22,8 +22,10 @@ my $builder = My_Build->new(
   dist_version_from  => 'lib/WebService/NFSN.pm',
   requires => {
       'perl'                  => '5.006',
+      'Carp'                  => 0,
       'Digest::SHA1'          => 0,
       'Exception::Class'      => 0,
+      'File::Spec'            => 0,
       'JSON::XS'              => 1,
       'LWP'                   => 5,
       'HTTP::Request::Common' => 0,

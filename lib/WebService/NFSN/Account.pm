@@ -57,7 +57,7 @@ WebService::NFSN::Account - Access NFSN account information
 
 =head1 VERSION
 
-This document describes version 0.06 of WebService::NFSN::Account, released September 27, 2008 as part of WebService-NFSN version 0.07.
+This document describes version 0.06 of WebService::NFSN::Account, released September 28, 2008 as part of WebService-NFSN version 0.08.
 
 
 =head1 SYNOPSIS

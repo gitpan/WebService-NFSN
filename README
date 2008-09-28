@@ -1,4 +1,4 @@
-WebService-NFSN version 0.07, released September 27, 2008
+WebService-NFSN version 0.08, released September 28, 2008
 
 WebService::NFSN is a client library for NearlyFreeSpeech.NET's
 member API (https://api.nearlyfreespeech.net/).  It is only useful
@@ -32,10 +32,11 @@ Also, some of the example scripts use Data::Dumper to display the results.
 
 
 CHANGES
-    Here's what's new in version 0.07 of WebService-NFSN:
+    Here's what's new in version 0.08 of WebService-NFSN:
     (See the file "Changes" for the full revision history.)
 
-	- Added the optional ttl parameter to the DNS addRR method.
+	- The constructor now reads login credentials from .nfsn-api
+	  if you don't supply them as parameters.
 
 
 
