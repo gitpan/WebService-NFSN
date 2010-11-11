@@ -1,11 +1,10 @@
 #---------------------------------------------------------------------
 package WebService::NFSN;
 #
-# Copyright 2007 Christopher J. Madsen
+# Copyright 2010 Christopher J. Madsen
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
 # Created: 3 Apr 2007
-# $Id: NFSN.pm 2110 2008-09-28 22:41:19Z cjm $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -15,21 +14,25 @@ package WebService::NFSN;
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See either the
 # GNU General Public License or the Artistic License for more details.
 #
-# Client for the NearlyFreeSpeech.NET API
+# ABSTRACT: Client for the NearlyFreeSpeech.NET API
 #---------------------------------------------------------------------
 
 use 5.006;
 use strict;
 use warnings;
-use Carp qw(carp croak);
-use Digest::SHA1 'sha1_hex';
+use Carp qw(carp confess croak);
+use Digest::SHA 'sha1_hex';
+use Exporter 'import';
 use LWP::UserAgent ();
-use UNIVERSAL 'isa';
+use Scalar::Util 'reftype';
+use Try::Tiny;
 
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
+
+our @EXPORT_OK = qw(_eval _eval_or_die);
 
 our $saltAlphabet
     = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -43,17 +46,46 @@ our @throw_parameters = (
 );
 
 #=====================================================================
+# Helper subs to safely handle string eval without clobbering $@:
+
+sub _eval
+{
+  my ($code) = @_;
+
+  my ($error, $success);
+  {
+    local $@;
+
+    $success = eval "$code ; 'OK'"; ## no critic ProhibitStringyEval
+
+    $error = $@;
+  }
+
+  return if $success && $success eq 'OK';
+
+  return $error || "eval died with false \$\@";
+} # end _eval
+
+sub _eval_or_die
+{
+  my $error = &_eval;           # Pass our @_ to _eval
+
+  confess $error if $error;
+} # end _eval_or_die
+
+#---------------------------------------------------------------------
+# Helper sub to identify a hashref:
+
+sub _is_hash { (reftype($_[0]) || '') eq 'HASH' }
+
+#=====================================================================
 # Load a JSON package and define our decode_json function:
 
 BEGIN
 {
-  ## no critic ProhibitStringyEval
-
-  eval "use JSON::XS ();";
-
-  if ($@) {
+  if (_eval "use JSON::XS ()") {
     # Can't find JSON::XS, try JSON (2.0 or later):
-    eval "use JSON qw(decode_json); 1" or die $@;
+    _eval_or_die "use JSON qw(decode_json)";
   } else {
     if ($JSON::XS::VERSION >= 2) {
       *decode_json = \&JSON::XS::decode_json;
@@ -119,10 +151,14 @@ sub new
       close $in or croak("Error closing $filename: $!");
 
       # Parse the JSON object:
-      my $hashRef = eval { decode_json($contents) };
-      croak("Error parsing $filename: $@") if $@;
+      my $hashRef = try {
+        decode_json($contents)
+      } catch {
+        croak("Error parsing $filename: $_");
+      };
+
       croak("$filename did not contain a JSON object")
-          unless isa($hashRef, 'HASH');
+          unless _is_hash($hashRef);
 
       croak(qq'$filename did not define "login"')
           unless defined ($login  = $hashRef->{login});
@@ -150,7 +186,7 @@ BEGIN {
 
     my $sub = lc $class;
 
-    eval <<"END CHILD CONSTRUCTOR"; ## no critic ProhibitStringyEval
+    _eval_or_die <<"END CHILD CONSTRUCTOR";
 sub $sub
 {
   require WebService::NFSN::$class;
@@ -159,7 +195,6 @@ sub $sub
 }
 END CHILD CONSTRUCTOR
 
-    die $@ if $@;
   } # end foreach class
 } # end BEGIN
 
@@ -201,10 +236,10 @@ sub make_request
 
   # Throw an exception if there was an error:
   if ($res->is_error) {
-    my $param = eval { decode_json($res->content) };
+    my $param = try { decode_json($res->content) };
 
     # Throw NFSNError if we decoded the response successfully:
-    if (isa($param, 'HASH') and defined $param->{error}) {
+    if (_is_hash($param) and defined $param->{error}) {
       # If bad timestamp, list the dates:
       my $debug = delete $param->{debug};
       if ($debug and
@@ -253,8 +288,9 @@ WebService::NFSN - Client for the NearlyFreeSpeech.NET API
 
 =head1 VERSION
 
-This document describes version 0.08 of WebService::NFSN, released September 28, 2008 as part of WebService-NFSN version 0.08.
-
+This document describes version 0.09 of
+WebService::NFSN, released November 11, 2010
+as part of WebService-NFSN version 0.09.
 
 =head1 SYNOPSIS
 
@@ -272,7 +308,7 @@ API.  It is only useful to people who have websites hosted at
 NearlyFreeSpeech.NET.
 
 Much of this documentation was adapted from the original API
-documentation at L<https://api.nearlyfreespeech.net/>.
+documentation at L<https://members.nearlyfreespeech.net/wiki/API>.
 
 =head1 INTERFACE
 
@@ -325,7 +361,6 @@ the last query sent to API.NearlyFreeSpeech.NET.  You shouldn't
 normally need this, but it may be handy for debugging.
 
 =back
-
 
 =head1 DIAGNOSTICS
 
@@ -435,22 +470,20 @@ couldn't find a F<.nfsn-api> file to load.
 
 =back
 
-
 =head1 CONFIGURATION AND ENVIRONMENT
 
-WebService::NFSN requires no configuration files or environment variables.
-
+WebService::NFSN has an optional configuration file named
+F<.nfsn-api>.  See L<the constructor|"INTERFACE"> for the details.
+The home directory is specified by C<$ENV{HOME}>.
 
 =head1 DEPENDENCIES
 
-L<Digest::SHA1>, L<Exception::Class>, L<JSON::XS>, L<LWP> (requires
+L<Digest::SHA>, L<Exception::Class>, L<JSON::XS>, L<LWP> (requires
 C<https> support), and L<URI>.  These are all available from CPAN.
-
 
 =head1 INCOMPATIBILITIES
 
 None reported.
-
 
 =head1 BUGS AND LIMITATIONS
 
@@ -464,24 +497,24 @@ NFSN server.
 If someone knows how to have LWP verify the server's certificate,
 please let me know.
 
-
 =head1 AUTHOR
 
-Christopher J. Madsen  S<< C<< <perl AT cjmweb.net> >> >>
+Christopher J. Madsen  S<C<< <perl AT cjmweb.net> >>>
 
 Please report any bugs or feature requests to
-S<< C<< <bug-WebService-NFSN AT rt.cpan.org> >> >>,
+S<C<< <bug-WebService-NFSN AT rt.cpan.org> >>>,
 or through the web interface at
 L<http://rt.cpan.org/Public/Bug/Report.html?Queue=WebService-NFSN>
 
+You can follow or contribute to WebService-NFSN's development at
+git://github.com/madsen/webservice-nfsn.git.
 
-=head1 LICENSE AND COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
-Copyright 2007 Christopher J. Madsen
+This software is copyright (c) 2010 by Christopher J. Madsen.
 
-This module is free software; you can redistribute it and/or
-modify it under the same terms as Perl itself. See L<perlartistic>.
-
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =head1 DISCLAIMER OF WARRANTY
 
@@ -497,7 +530,7 @@ NECESSARY SERVICING, REPAIR, OR CORRECTION.
 
 IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
 WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
-REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE
+REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENSE, BE
 LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL,
 OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE
 THE SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
@@ -505,3 +538,5 @@ RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
 FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
 SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGES.
+
+=cut

@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id: changeTTL.pl 2110 2008-09-28 22:41:19Z cjm $
+# changeTTL.pl
 # Copyright 2008 Christopher J. Madsen
 #
 # This program is free software; you can redistribute it and/or modify

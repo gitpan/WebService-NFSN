@@ -1,6 +1,14 @@
 #! /usr/bin/perl -T
+
+BEGIN {
+  unless ($ENV{RELEASE_TESTING}) {
+    require Test::More;
+    Test::More::plan(skip_all => 'these tests are for release candidate testing');
+  }
+}
+
 #---------------------------------------------------------------------
-# $Id: pod-coverage.t 1994 2008-04-26 03:26:29Z cjm $
+# pod-coverage.t
 #---------------------------------------------------------------------
 
 use Test::More;

@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id: dns.pl 1744 2007-04-06 22:27:10Z cjm $
+# dns.pl
 # Copyright 2007 Christopher J. Madsen
 #
 # This program is free software; you can redistribute it and/or modify

@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id: accounts.pl 1738 2007-04-06 16:44:24Z cjm $
+# accounts.pl
 # Copyright 2007 Christopher J. Madsen
 #
 # This program is free software; you can redistribute it and/or modify
