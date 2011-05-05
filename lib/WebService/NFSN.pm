@@ -23,6 +23,7 @@ use warnings;
 use Carp qw(carp confess croak);
 use Digest::SHA 'sha1_hex';
 use Exporter 'import';
+use File::ShareDir 'dist_file';
 use LWP::UserAgent ();
 use Scalar::Util 'reftype';
 use Try::Tiny;
@@ -30,14 +31,21 @@ use Try::Tiny;
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 our @EXPORT_OK = qw(_eval _eval_or_die);
 
 our $saltAlphabet
     = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-our $ua = LWP::UserAgent->new(agent => "WebService-NFSN/$VERSION ");
+our $ua = LWP::UserAgent->new(
+  agent => "WebService-NFSN/$VERSION ",
+  # If LWP 6, verify the server's cert using NFSN's internal CA cert:
+  ssl_opts => {
+    verify_hostname => 1,
+    SSL_ca_file => dist_file(qw(WebService-NFSN nfsn-ca.crt)),
+  },
+);
 
 our @throw_parameters = (
   show_trace     => 1,
@@ -70,7 +78,16 @@ sub _eval_or_die
 {
   my $error = &_eval;           # Pass our @_ to _eval
 
-  confess $error if $error;
+  return unless $error;
+
+  # Number lines in eval'd code:
+  my $code = shift;
+  my $lineNum = ($code =~ tr/\n//);
+  my $fmt = '%' . length($lineNum) . 'd: ';
+  $lineNum = 0;
+  $code =~ s/^/sprintf $fmt, ++$lineNum/gem;
+
+  confess "$code\n$error";
 } # end _eval_or_die
 
 #---------------------------------------------------------------------
@@ -182,11 +199,13 @@ BEGIN {
   # Create access methods for each object type:
   #   (Member is not auto-generated, because it has a default value)
 
+  my $code = '';
+
   foreach my $class (qw(Account DNS Email Site)) {
 
     my $sub = lc $class;
 
-    _eval_or_die <<"END CHILD CONSTRUCTOR";
+    $code .= <<"END CHILD CONSTRUCTOR";
 sub $sub
 {
   require WebService::NFSN::$class;
@@ -196,6 +215,8 @@ sub $sub
 END CHILD CONSTRUCTOR
 
   } # end foreach class
+
+  _eval_or_die $code;
 } # end BEGIN
 
 #---------------------------------------------------------------------
@@ -288,9 +309,9 @@ WebService::NFSN - Client for the NearlyFreeSpeech.NET API
 
 =head1 VERSION
 
-This document describes version 0.09 of
-WebService::NFSN, released November 11, 2010
-as part of WebService-NFSN version 0.09.
+This document describes version 0.10 of
+WebService::NFSN, released May 5, 2011
+as part of WebService-NFSN version 0.10.
 
 =head1 SYNOPSIS
 
@@ -481,21 +502,23 @@ The home directory is specified by C<$ENV{HOME}>.
 L<Digest::SHA>, L<Exception::Class>, L<JSON::XS>, L<LWP> (requires
 C<https> support), and L<URI>.  These are all available from CPAN.
 
+You need at least LWP version 6.00 in order to verify the server's
+certificate.  Earlier versions of LWP are vulnerable to a
+man-in-the-middle attack.  See L<"BUGS AND LIMITATIONS">.
+
 =head1 INCOMPATIBILITIES
 
 None reported.
 
 =head1 BUGS AND LIMITATIONS
 
-The server's SSL certificate is not verified, so WebService::NFSN is
+The server's SSL certificate is not verified if your LWP is less than
+version 6.00, leaving WebService::NFSN
 vulnerable to a man-in-the-middle attack.  However, due to the design
 of NFSN's API, the attacker should only be able to monitor/suppress
 your queries and monitor/alter the responses.  The attacker should not
 be able to send (properly authenticated) altered requests to the real
 NFSN server.
-
-If someone knows how to have LWP verify the server's certificate,
-please let me know.
 
 =head1 AUTHOR
 
@@ -507,11 +530,11 @@ or through the web interface at
 L<http://rt.cpan.org/Public/Bug/Report.html?Queue=WebService-NFSN>
 
 You can follow or contribute to WebService-NFSN's development at
-git://github.com/madsen/webservice-nfsn.git.
+L<< http://github.com/madsen/webservice-nfsn >>.
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Christopher J. Madsen.
+This software is copyright (c) 2011 by Christopher J. Madsen.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

@@ -53,8 +53,8 @@ WebService::NFSN::Site - Access NFSN site API
 =head1 VERSION
 
 This document describes version 0.09 of
-WebService::NFSN::Site, released November 11, 2010
-as part of WebService-NFSN version 0.09.
+WebService::NFSN::Site, released May 5, 2011
+as part of WebService-NFSN version 0.10.
 
 =head1 SYNOPSIS
 
@@ -122,11 +122,11 @@ or through the web interface at
 L<http://rt.cpan.org/Public/Bug/Report.html?Queue=WebService-NFSN>
 
 You can follow or contribute to WebService-NFSN's development at
-git://github.com/madsen/webservice-nfsn.git.
+L<< http://github.com/madsen/webservice-nfsn >>.
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Christopher J. Madsen.
+This software is copyright (c) 2011 by Christopher J. Madsen.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

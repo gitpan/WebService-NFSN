@@ -20,7 +20,10 @@ my $builder = My_Build->new(
   dist_author        => 'Christopher J. Madsen <perl@cjmweb.net>',
   dist_version_from  => 'lib/WebService/NFSN.pm',
   dynamic_config     => 0,
-  # Prerequisites inserted by DistZilla:
+  # Automatically inserted by DistZilla:
+  'share_dir' => {
+    'dist' => 'share'
+  },
   'build_requires' => {
     'File::Spec' => '0',
     'FindBin' => '0',
@@ -38,10 +41,12 @@ my $builder = My_Build->new(
     'Digest::SHA' => '0',
     'Exception::Class' => '0',
     'Exporter' => '0',
+    'File::ShareDir' => '0',
     'File::Spec' => '0',
     'HTTP::Request::Common' => '0',
     'JSON::XS' => '1',
     'LWP' => '5',
+    'LWP::Protocol::https' => '0',
     'Scalar::Util' => '1.01',
     'Try::Tiny' => '0.04',
     'URI' => '1',

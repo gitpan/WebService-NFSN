@@ -1,4 +1,4 @@
-WebService-NFSN version 0.09, released November 11, 2010
+WebService-NFSN version 0.10, released May 5, 2011
 
 
 WebService::NFSN is a client library for NearlyFreeSpeech.NET's member
@@ -27,10 +27,12 @@ DEPENDENCIES
   Digest::SHA             
   Exception::Class        
   Exporter                
+  File::ShareDir          
   File::Spec              
   HTTP::Request::Common   
   JSON::XS                1  (JSON 2.0 is also acceptable)
   LWP                     5
+  LWP::Protocol::https    
   Scalar::Util            1.01
   Try::Tiny               0.04
   URI                     1
@@ -40,23 +42,20 @@ Also, some of the example scripts use Data::Dumper to display the results.
 
 
 CHANGES
-    Here's what's new in version 0.09 of WebService-NFSN:
+    Here's what's new in version 0.10 of WebService-NFSN:
     (See the file "Changes" for the full revision history.)
 
-	- Use Scalar::Util's reftype instead of UNIVERSAL::isa
+	- If you have LWP 6.00 or better, WebService::NFSN will now
+	  automatically verify the server's certificate to protect you
+	  against man-in-the-middle attacks.
 
-	- Cleaned up usage of eval and $@ (using Try::Tiny where possible)
-
-	- Changed examples/nfsn.pl to get credentials from .nfsn-api
-
-	- Switched from Digest::SHA1 to Digest::SHA, because the
-	  latter became a core module in Perl 5.10.
+	- Concatenate generated code to use fewer string evals
 
 
 
 COPYRIGHT AND LICENCE
 
-This software is copyright (c) 2010 by Christopher J. Madsen.
+This software is copyright (c) 2011 by Christopher J. Madsen.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
