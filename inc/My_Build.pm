@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------
-package My_Build;
+package inc::My_Build;
 #
 # Copyright 2010 Christopher J. Madsen
 #
@@ -18,14 +18,13 @@ package My_Build;
 
 use strict;
 use warnings;
-use File::Spec ();
-use Module::Build ();
-use base 'Module::Build';
+
+use parent 'Module::Build';
 
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '0.09';
+our $VERSION = '1.00';
 
 #---------------------------------------------------------------------
 # Explain that JSON 2 can substitute for JSON::XS:
@@ -41,11 +40,14 @@ sub prereq_failures
   if (my $attrib = $out->{requires}{'JSON::XS'}) {
     my $message;
 
-    eval "use JSON 2 ();";
-
-    if (not $@) {
+    if (do { local $@; eval "use JSON 2 (); 1" }) {
       # JSON 2.0 or later is an acceptable replacement for JSON::XS:
       delete $out->{requires}{'JSON::XS'};
+
+      # Update requirements for MYMETA:
+      my $req = $self->requires;
+      delete $req->{'JSON::XS'};
+      $req->{'JSON'} = 2;
 
       # Clean out empty hashrefs:
       delete $out->{requires} unless %{$out->{requires}};

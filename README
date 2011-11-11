@@ -1,4 +1,4 @@
-WebService-NFSN version 0.10, released May 5, 2011
+WebService-NFSN version 1.00, released November 11, 2011
 
 
 WebService::NFSN is a client library for NearlyFreeSpeech.NET's member
@@ -31,25 +31,23 @@ DEPENDENCIES
   File::Spec              
   HTTP::Request::Common   
   JSON::XS                1  (JSON 2.0 is also acceptable)
-  LWP                     5
   LWP::Protocol::https    
+  LWP::UserAgent          6
   Scalar::Util            1.01
   Try::Tiny               0.04
-  URI                     1
+  URI                     1.00
+  parent
 
 Also, some of the example scripts use Data::Dumper to display the results.
 
 
 
 CHANGES
-    Here's what's new in version 0.10 of WebService-NFSN:
+    Here's what's new in version 1.00 of WebService-NFSN:
     (See the file "Changes" for the full revision history.)
 
-	- If you have LWP 6.00 or better, WebService::NFSN will now
-	  automatically verify the server's certificate to protect you
-	  against man-in-the-middle attacks.
-
-	- Concatenate generated code to use fewer string evals
+	- Require libwww-perl 6.00
+	- Use parent instead of base
 
 
 

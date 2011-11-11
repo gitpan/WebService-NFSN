@@ -24,14 +24,14 @@ use Carp qw(carp confess croak);
 use Digest::SHA 'sha1_hex';
 use Exporter 'import';
 use File::ShareDir 'dist_file';
-use LWP::UserAgent ();
-use Scalar::Util 'reftype';
-use Try::Tiny;
+use LWP::UserAgent 6 ();
+use Scalar::Util 1.01 'reftype';
+use Try::Tiny 0.04;
 
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '0.10';
+our $VERSION = '1.00';
 
 our @EXPORT_OK = qw(_eval _eval_or_die);
 
@@ -309,9 +309,9 @@ WebService::NFSN - Client for the NearlyFreeSpeech.NET API
 
 =head1 VERSION
 
-This document describes version 0.10 of
-WebService::NFSN, released May 5, 2011
-as part of WebService-NFSN version 0.10.
+This document describes version 1.00 of
+WebService::NFSN, released November 11, 2011
+as part of WebService-NFSN version 1.00.
 
 =head1 SYNOPSIS
 
@@ -504,7 +504,7 @@ C<https> support), and L<URI>.  These are all available from CPAN.
 
 You need at least LWP version 6.00 in order to verify the server's
 certificate.  Earlier versions of LWP are vulnerable to a
-man-in-the-middle attack.  See L<"BUGS AND LIMITATIONS">.
+man-in-the-middle attack.
 
 =head1 INCOMPATIBILITIES
 
@@ -512,22 +512,16 @@ None reported.
 
 =head1 BUGS AND LIMITATIONS
 
-The server's SSL certificate is not verified if your LWP is less than
-version 6.00, leaving WebService::NFSN
-vulnerable to a man-in-the-middle attack.  However, due to the design
-of NFSN's API, the attacker should only be able to monitor/suppress
-your queries and monitor/alter the responses.  The attacker should not
-be able to send (properly authenticated) altered requests to the real
-NFSN server.
+No bugs have been reported.
 
 =head1 AUTHOR
 
 Christopher J. Madsen  S<C<< <perl AT cjmweb.net> >>>
 
-Please report any bugs or feature requests to
-S<C<< <bug-WebService-NFSN AT rt.cpan.org> >>>,
+Please report any bugs or feature requests
+to S<C<< <bug-WebService-NFSN AT rt.cpan.org> >>>
 or through the web interface at
-L<http://rt.cpan.org/Public/Bug/Report.html?Queue=WebService-NFSN>
+L<< http://rt.cpan.org/Public/Bug/Report.html?Queue=WebService-NFSN >>.
 
 You can follow or contribute to WebService-NFSN's development at
 L<< http://github.com/madsen/webservice-nfsn >>.

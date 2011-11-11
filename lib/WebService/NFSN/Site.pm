@@ -21,12 +21,12 @@ use 5.006;
 use strict;
 use warnings;
 
-use base 'WebService::NFSN::Object';
+use parent 'WebService::NFSN::Object';
 
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '0.09';
+our $VERSION = '1.00';
 
 #=====================================================================
 BEGIN {
@@ -52,9 +52,9 @@ WebService::NFSN::Site - Access NFSN site API
 
 =head1 VERSION
 
-This document describes version 0.09 of
-WebService::NFSN::Site, released May 5, 2011
-as part of WebService-NFSN version 0.10.
+This document describes version 1.00 of
+WebService::NFSN::Site, released November 11, 2011
+as part of WebService-NFSN version 1.00.
 
 =head1 SYNOPSIS
 
@@ -116,10 +116,10 @@ L<WebService::NFSN>
 
 Christopher J. Madsen  S<C<< <perl AT cjmweb.net> >>>
 
-Please report any bugs or feature requests to
-S<C<< <bug-WebService-NFSN AT rt.cpan.org> >>>,
+Please report any bugs or feature requests
+to S<C<< <bug-WebService-NFSN AT rt.cpan.org> >>>
 or through the web interface at
-L<http://rt.cpan.org/Public/Bug/Report.html?Queue=WebService-NFSN>
+L<< http://rt.cpan.org/Public/Bug/Report.html?Queue=WebService-NFSN >>.
 
 You can follow or contribute to WebService-NFSN's development at
 L<< http://github.com/madsen/webservice-nfsn >>.
