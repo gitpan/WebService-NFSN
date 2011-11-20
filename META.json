@@ -26,7 +26,8 @@
       },
       "configure" : {
          "requires" : {
-            "Module::Build" : "0.21"
+            "Module::Build" : "0.21",
+            "parent" : 0
          }
       },
       "runtime" : {
@@ -69,7 +70,7 @@
          "web" : "http://github.com/madsen/webservice-nfsn"
       }
    },
-   "version" : "1.00",
+   "version" : "1.01",
    "x_Dist_Zilla" : {
       "plugins" : [
          {
@@ -224,6 +225,17 @@
                }
             },
             "name" : "Prereqs",
+            "version" : "4.300003"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Prereqs",
+            "config" : {
+               "Dist::Zilla::Plugin::Prereqs" : {
+                  "phase" : "configure",
+                  "type" : "requires"
+               }
+            },
+            "name" : "ConfigureRequires",
             "version" : "4.300003"
          },
          {

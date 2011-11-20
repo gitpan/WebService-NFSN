@@ -1,4 +1,4 @@
-WebService-NFSN version 1.00, released November 11, 2011
+WebService-NFSN version 1.01, released November 20, 2011
 
 
 WebService::NFSN is a client library for NearlyFreeSpeech.NET's member
@@ -43,11 +43,12 @@ Also, some of the example scripts use Data::Dumper to display the results.
 
 
 CHANGES
-    Here's what's new in version 1.00 of WebService-NFSN:
+    Here's what's new in version 1.01 of WebService-NFSN:
     (See the file "Changes" for the full revision history.)
 
-	- Require libwww-perl 6.00
-	- Use parent instead of base
+	- Fix possible installation problem:
+
+	    parent needs to be in configure_requires
 
 
 

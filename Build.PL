@@ -26,7 +26,8 @@ my $builder = inc::My_Build->new(
     'Test::More' => '0'
   },
   'configure_requires' => {
-    'Module::Build' => '0.21'
+    'Module::Build' => '0.21',
+    'parent' => '0'
   },
   'recommends' => {
     'Data::Dumper' => '0'

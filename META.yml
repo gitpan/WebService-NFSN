@@ -8,6 +8,7 @@ build_requires:
   Test::More: 0
 configure_requires:
   Module::Build: 0.21
+  parent: 0
 dynamic_config: 0
 generated_by: 'Dist::Zilla version 4.300003, CPAN::Meta::Converter version 2.110440'
 license: perl
@@ -38,7 +39,7 @@ requires:
   perl: 5.006
 resources:
   repository: git://github.com/madsen/webservice-nfsn.git
-version: 1.00
+version: 1.01
 x_Dist_Zilla:
   plugins:
     -
@@ -162,6 +163,14 @@ x_Dist_Zilla:
           phase: runtime
           type: requires
       name: Prereqs
+      version: 4.300003
+    -
+      class: Dist::Zilla::Plugin::Prereqs
+      config:
+        Dist::Zilla::Plugin::Prereqs:
+          phase: configure
+          type: requires
+      name: ConfigureRequires
       version: 4.300003
     -
       class: Dist::Zilla::Plugin::MetaNoIndex

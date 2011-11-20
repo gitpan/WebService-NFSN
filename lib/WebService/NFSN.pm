@@ -31,7 +31,7 @@ use Try::Tiny 0.04;
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 our @EXPORT_OK = qw(_eval _eval_or_die);
 
@@ -309,9 +309,9 @@ WebService::NFSN - Client for the NearlyFreeSpeech.NET API
 
 =head1 VERSION
 
-This document describes version 1.00 of
-WebService::NFSN, released November 11, 2011
-as part of WebService-NFSN version 1.00.
+This document describes version 1.01 of
+WebService::NFSN, released November 20, 2011
+as part of WebService-NFSN version 1.01.
 
 =head1 SYNOPSIS
 

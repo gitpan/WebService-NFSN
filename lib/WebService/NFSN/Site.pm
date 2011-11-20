@@ -53,8 +53,8 @@ WebService::NFSN::Site - Access NFSN site API
 =head1 VERSION
 
 This document describes version 1.00 of
-WebService::NFSN::Site, released November 11, 2011
-as part of WebService-NFSN version 1.00.
+WebService::NFSN::Site, released November 20, 2011
+as part of WebService-NFSN version 1.01.
 
 =head1 SYNOPSIS
 
