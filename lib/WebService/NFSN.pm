@@ -22,7 +22,7 @@ use strict;
 use warnings;
 use Carp qw(carp confess croak);
 use Digest::SHA 'sha1_hex';
-use Exporter 'import';
+use Exporter 5.57 'import';     # exported import method
 use File::ShareDir 'dist_file';
 use LWP::UserAgent 6 ();
 use Scalar::Util 1.01 'reftype';
@@ -31,7 +31,7 @@ use Try::Tiny 0.04;
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 our @EXPORT_OK = qw(_eval _eval_or_die);
 
@@ -309,9 +309,9 @@ WebService::NFSN - Client for the NearlyFreeSpeech.NET API
 
 =head1 VERSION
 
-This document describes version 1.01 of
-WebService::NFSN, released November 20, 2011
-as part of WebService-NFSN version 1.01.
+This document describes version 1.02 of
+WebService::NFSN, released December 21, 2011
+as part of WebService-NFSN version 1.02.
 
 =head1 SYNOPSIS
 
@@ -338,8 +338,9 @@ documentation at L<https://members.nearlyfreespeech.net/wiki/API>.
 =item C<< $nfsn = WebService::NFSN->new( [$USER, $API_KEY] ) >>
 
 This constructs a new API manager object.  C<$USER> is your NFSN
-member login.  You can get your C<$API_KEY> by making a Secure Support
-Request at L<https://members.nearlyfreespeech.net/support/request>.
+member login.  You can get your C<$API_KEY> by making a free
+Assistance Request at L<https://members.nearlyfreespeech.net/support/request>.
+(Select "Request an API key" on that page.)
 
 If you call new without parameters, it will look for a file named
 F<.nfsn-api> in the current directory and (if not found there) in your

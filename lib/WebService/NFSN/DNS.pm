@@ -57,8 +57,8 @@ WebService::NFSN::DNS - Access NFSN DNS information
 =head1 VERSION
 
 This document describes version 1.00 of
-WebService::NFSN::DNS, released November 20, 2011
-as part of WebService-NFSN version 1.01.
+WebService::NFSN::DNS, released December 21, 2011
+as part of WebService-NFSN version 1.02.
 
 =head1 SYNOPSIS
 

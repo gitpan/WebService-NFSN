@@ -22,11 +22,11 @@ my $builder = inc::My_Build->new(
   },
   'build_requires' => {
     'FindBin' => '0',
-    'Module::Build' => '0.21',
+    'Module::Build' => '0.36',
     'Test::More' => '0'
   },
   'configure_requires' => {
-    'Module::Build' => '0.21',
+    'Module::Build' => '0.36',
     'parent' => '0'
   },
   'recommends' => {
@@ -36,12 +36,12 @@ my $builder = inc::My_Build->new(
     'Carp' => '0',
     'Digest::SHA' => '0',
     'Exception::Class' => '0',
-    'Exporter' => '0',
+    'Exporter' => '5.57',
     'File::ShareDir' => '0',
     'File::Spec' => '0',
     'HTTP::Request::Common' => '0',
     'JSON::XS' => '1',
-    'LWP::Protocol::https' => '0',
+    'LWP::Protocol::https' => '6',
     'LWP::UserAgent' => '6',
     'Scalar::Util' => '1.01',
     'Try::Tiny' => '0.04',
