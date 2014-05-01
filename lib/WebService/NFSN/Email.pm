@@ -26,7 +26,7 @@ use parent 'WebService::NFSN::Object';
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '1.00';
+our $VERSION = '1.03'; # VERSION
 
 #=====================================================================
 BEGIN {
@@ -53,9 +53,9 @@ WebService::NFSN::Email - Access NFSN email forwarding
 
 =head1 VERSION
 
-This document describes version 1.00 of
-WebService::NFSN::Email, released December 21, 2011
-as part of WebService-NFSN version 1.02.
+This document describes version 1.03 of
+WebService::NFSN::Email, released April 30, 2014
+as part of WebService-NFSN version 1.03.
 
 =head1 SYNOPSIS
 
@@ -135,11 +135,11 @@ or through the web interface at
 L<< http://rt.cpan.org/Public/Bug/Report.html?Queue=WebService-NFSN >>.
 
 You can follow or contribute to WebService-NFSN's development at
-L<< http://github.com/madsen/webservice-nfsn >>.
+L<< https://github.com/madsen/webservice-nfsn >>.
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by Christopher J. Madsen.
+This software is copyright (c) 2014 by Christopher J. Madsen.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

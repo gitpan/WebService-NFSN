@@ -17,9 +17,6 @@ my $builder = inc::My_Build->new(
   dist_version_from  => 'lib/WebService/NFSN.pm',
   dynamic_config     => 0,
   # Automatically inserted by DistZilla:
-  'share_dir' => {
-    'dist' => 'share'
-  },
   'build_requires' => {
     'FindBin' => '0',
     'Module::Build' => '0.36',
@@ -37,7 +34,6 @@ my $builder = inc::My_Build->new(
     'Digest::SHA' => '0',
     'Exception::Class' => '0',
     'Exporter' => '5.57',
-    'File::ShareDir' => '0',
     'File::Spec' => '0',
     'HTTP::Request::Common' => '0',
     'JSON::XS' => '1',
